@@ -25,10 +25,10 @@ func _process(delta):
 	if d2 > cube_step:
 		d2 = 0
 		if Input.is_action_pressed("ui_right"):
-			$Snake.rotate_object_local(Vector3(0, -1, 0), P2)
+			$Snake.rotate_object_local(-transform.basis.y, P2)
 		elif Input.is_action_pressed("ui_left"):
-			$Snake.rotate_object_local(Vector3(0, 1, 0), P2)
+			$Snake.rotate_object_local(transform.basis.y, P2)
 		elif Input.is_action_pressed("ui_up"):
-			$Snake.rotate_object_local(Vector3(-1, 0, 0), P2)
+			$Snake.rotate_object_local(-transform.basis.x, P2)
 		elif Input.is_action_pressed("ui_down"):
-			$Snake.rotate_object_local(Vector3(1, 0, 0), P2)
+			$Snake.rotate_object_local(transform.basis.x, P2)
