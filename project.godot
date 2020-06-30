@@ -16,8 +16,10 @@ _global_script_class_icons={
 [application]
 
 config/name="3D Snake"
+run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
 [rendering]
 
+environment/default_clear_color=Color( 0.145098, 0.145098, 0.145098, 1 )
 environment/default_environment="res://default_env.tres"
