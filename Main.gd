@@ -1,7 +1,5 @@
 extends Spatial
 
-const P2 = PI / 2
-
 var speed = 10
 var cube_step
 var min_step
@@ -21,14 +19,14 @@ func _process(delta):
 		$Snake.translate_object_local(transform.basis.z * min_step)
 	d2 += speed * delta
 	# If crossing a segment boundary, rotate the snake head towards the desired
-	# direction and then we will move in that direction (along the z-axis)
+	# direction and then we will move in that direction (along the local z-axis)
 	if d2 > cube_step:
 		d2 = 0
 		if Input.is_action_pressed("ui_right"):
-			$Snake.rotate_object_local(-transform.basis.y, P2)
+			$Snake.rotate_head(-transform.basis.y)
 		elif Input.is_action_pressed("ui_left"):
-			$Snake.rotate_object_local(transform.basis.y, P2)
+			$Snake.rotate_head(transform.basis.y)
 		elif Input.is_action_pressed("ui_up"):
-			$Snake.rotate_object_local(-transform.basis.x, P2)
+			$Snake.rotate_head(-transform.basis.x)
 		elif Input.is_action_pressed("ui_down"):
-			$Snake.rotate_object_local(transform.basis.x, P2)
+			$Snake.rotate_head(transform.basis.x)
