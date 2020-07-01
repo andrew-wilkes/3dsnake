@@ -16,7 +16,8 @@ func _process(delta):
 	d1 += speed * delta
 	if d1 > min_step:
 		d1 = 0
-		$Snake.translate_object_local(transform.basis.z * min_step)
+		$Snake.move_ahead(transform.basis.z * min_step)
+	
 	d2 += speed * delta
 	# If crossing a segment boundary, rotate the snake head towards the desired
 	# direction and then we will move in that direction (along the local z-axis)
