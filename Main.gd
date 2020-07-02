@@ -18,16 +18,20 @@ func _process(delta):
 		d1 = 0
 		$Snake.move_ahead(transform.basis.z * min_step)
 	
-	d2 += speed * delta
 	# If crossing a segment boundary, rotate the snake head towards the desired
 	# direction and then we will move in that direction (along the local z-axis)
+	d2 += speed * delta
 	if d2 > cube_step:
 		d2 = 0
-		if Input.is_action_pressed("ui_right"):
-			$Snake.rotate_head(-transform.basis.y)
-		elif Input.is_action_pressed("ui_left"):
-			$Snake.rotate_head(transform.basis.y)
-		elif Input.is_action_pressed("ui_up"):
-			$Snake.rotate_head(-transform.basis.x)
-		elif Input.is_action_pressed("ui_down"):
-			$Snake.rotate_head(transform.basis.x)
+		process_inputs()
+
+
+func process_inputs():
+	if Input.is_action_pressed("ui_right"):
+		$Snake.rotate_head(-transform.basis.y)
+	elif Input.is_action_pressed("ui_left"):
+		$Snake.rotate_head(transform.basis.y)
+	elif Input.is_action_pressed("ui_up"):
+		$Snake.rotate_head(-transform.basis.x)
+	elif Input.is_action_pressed("ui_down"):
+		$Snake.rotate_head(transform.basis.x)
