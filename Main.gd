@@ -1,5 +1,7 @@
 extends Spatial
 
+const TESTING = true
+
 var speed = 10
 var cube_step
 var min_step
@@ -10,6 +12,8 @@ var max_offset = 8
 func _ready():
 	cube_step = $Base/Snake.width
 	min_step = cube_step / 8
+	if TESTING:
+		show_extents()
 
 
 func _process(delta):
@@ -27,6 +31,10 @@ func _process(delta):
 		d2 = 0
 		process_inputs()
 	
+	move_base()
+
+
+func move_base():
 	# Move base if snake hits box boundary
 	var st = $Base/Snake.translation
 	var bt = $Base.translation
@@ -61,3 +69,12 @@ func process_inputs():
 		$Base/Snake.rotate_head(-transform.basis.x)
 	elif Input.is_action_pressed("ui_down"):
 		$Base/Snake.rotate_head(transform.basis.x)
+
+
+func show_extents():
+	for x in [-1, 1]:
+		for y in [-1, 1]:
+			for z in [-1, 1]:
+				var box = CSGBox.new()
+				box.translation = Vector3(x, y, z) * max_offset
+				$Base/Extents.add_child(box)

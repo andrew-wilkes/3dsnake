@@ -12,6 +12,8 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.52055, 0, 2.16754 )
 [node name="Base" type="Spatial" parent="."]
 
 [node name="Camera" type="Camera" parent="Base"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.607, 15.099 )
+transform = Transform( 1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 4, 24 )
 
 [node name="Snake" parent="Base" instance=ExtResource( 2 )]
+
+[node name="Extents" type="Spatial" parent="Base"]
