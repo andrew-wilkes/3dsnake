@@ -2,33 +2,25 @@ extends Spatial
 
 var speed = 10
 var cube_step
-var min_step
-var d1 = 0
-var d2 = 0
+var d = 0
 
 func _ready():
-	cube_step = $Base/Snake.width
-	min_step = cube_step / 8
-	if Globals.TESTING:
-		show_extents()
+	cube_step = 2
+	#show_extents()
 
 
 func _process(delta):
 	delta *= speed
-	# Move the snake in steps
-	d1 += delta
-	if d1 > min_step:
-		d1 = 0
-		$Base/Snake.move_ahead(transform.basis.z * min_step)
-	
-	# If crossing a segment boundary, rotate the snake head towards the desired
+
+	# Rotate the snake head towards the desired
 	# direction and then we will move in that direction (along the local z-axis)
-	d2 += delta
-	if d2 > cube_step:
-		d2 = 0
+	d += delta
+	if d > cube_step:
+		d = 0
 		process_inputs()
-	
-	move_base()
+		$Base/Snake.move_ahead(transform.basis.z * cube_step)
+		set_apple_position()
+		move_base()
 
 
 func move_base():
@@ -78,3 +70,32 @@ func show_extents():
 				var box = CSGBox.new()
 				box.translation = Vector3(x, y, z) * Globals.MAX_OFFSET
 				$Base/Extents.add_child(box)
+
+
+func set_apple_position():
+	# The apple should be near the snake but not coincident with any other object apart from dust particles
+	
+	# Get array of points to avoid
+	var points = [$Apple.translation]
+	for t in $Base/Tail.get_children():
+		points.append(t.translation)
+	
+	# Find a suitable position in empty space
+	var pos
+	var finding = true
+	while finding:
+		# Get a random position away from the snake head
+		pos = $Base/Snake.translation + Vector3(get_point(), get_point(), get_point())
+		# Continue trying new positions if any of the points are too close
+		finding = false
+		for p in points:
+			if (pos - p).length() < 2.2:
+				finding = true
+				break
+	$Apple.translation = pos + $Base.translation
+
+
+func get_point():
+	# Return a value of +/-4/6/8
+	var n = 4 + randi() % 5
+	return n if randf() < 0.5 else -n
