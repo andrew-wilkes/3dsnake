@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Dust.gd" type="Script" id=1]
+
+[node name="Dust" type="Spatial"]
+script = ExtResource( 1 )
+
+[node name="Cloud" type="Spatial" parent="."]
+
+[node name="Box" type="CSGBox" parent="Cloud"]
+width = 0.1
+height = 0.1
+depth = 0.1
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2 )

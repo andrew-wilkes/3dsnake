@@ -1,18 +1,15 @@
 extends Spatial
 
-const TESTING = true
-
 var speed = 10
 var cube_step
 var min_step
 var d1 = 0
 var d2 = 0
-var max_offset = 8
 
 func _ready():
 	cube_step = $Base/Snake.width
 	min_step = cube_step / 8
-	if TESTING:
+	if Globals.TESTING:
 		show_extents()
 
 
@@ -36,28 +33,31 @@ func _process(delta):
 
 func move_base():
 	# Move base if snake hits box boundary
+	# So the camera follows the snake
+	# But without stationary items in the scene, the snake seems to have stopped moving
 	var st = $Base/Snake.translation
 	var bt = $Base.translation
-	if st.x > max_offset:
-		bt.x += st.x - max_offset
-		st.x = max_offset
-	if -st.x > max_offset:
-		bt.x += st.x + max_offset
-		st.x = -max_offset
-	if st.y > max_offset:
-		bt.y += st.y - max_offset
-		st.y = max_offset
-	if -st.y > max_offset:
-		bt.y += st.y + max_offset
-		st.y = -max_offset
-	if st.z > max_offset:
-		bt.z += st.z - max_offset
-		st.z = max_offset
-	if -st.z > max_offset:
-		bt.z += st.z + max_offset
-		st.z = -max_offset
+	if st.x > Globals.MAX_OFFSET:
+		bt.x += st.x - Globals.MAX_OFFSET
+		st.x = Globals.MAX_OFFSET
+	if -st.x > Globals.MAX_OFFSET:
+		bt.x += st.x + Globals.MAX_OFFSET
+		st.x = -Globals.MAX_OFFSET
+	if st.y > Globals.MAX_OFFSET:
+		bt.y += st.y - Globals.MAX_OFFSET
+		st.y = Globals.MAX_OFFSET
+	if -st.y > Globals.MAX_OFFSET:
+		bt.y += st.y + Globals.MAX_OFFSET
+		st.y = -Globals.MAX_OFFSET
+	if st.z > Globals.MAX_OFFSET:
+		bt.z += st.z - Globals.MAX_OFFSET
+		st.z = Globals.MAX_OFFSET
+	if -st.z > Globals.MAX_OFFSET:
+		bt.z += st.z + Globals.MAX_OFFSET
+		st.z = -Globals.MAX_OFFSET
 	$Base/Snake.translation = st
 	$Base.translation = bt
+	$Dust.check_extents(bt)
 
 
 func process_inputs():
@@ -76,5 +76,5 @@ func show_extents():
 		for y in [-1, 1]:
 			for z in [-1, 1]:
 				var box = CSGBox.new()
-				box.translation = Vector3(x, y, z) * max_offset
+				box.translation = Vector3(x, y, z) * Globals.MAX_OFFSET
 				$Base/Extents.add_child(box)
