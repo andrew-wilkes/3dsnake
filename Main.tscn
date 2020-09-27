@@ -29,4 +29,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.58654, 0, 0 )
 [node name="Camera" type="Camera" parent="Tripod"]
 transform = Transform( 1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 4, 24 )
 current = true
+[connection signal="hit_tail" from="Snake" to="." method="_on_Snake_hit_tail"]
 [connection signal="ate_apple" from="Apple" to="." method="_on_Apple_ate_apple"]

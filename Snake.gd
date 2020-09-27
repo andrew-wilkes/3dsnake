@@ -113,8 +113,8 @@ func move_ahead(step: int):
 		$Tail.move_child(tail_piece, 0)
 		tail_piece.translation = old_head_pos
 	
-	if Globals.add_to_tail:
-		Globals.add_to_tail = false
+	if Globals.add_to_tail > 0:
+		Globals.add_to_tail -= 1
 		var tpi = tail_piece_scene.instance()
 		tpi.connect("area_entered", self, "hit_tail")
 		tpi.translation = end_pos

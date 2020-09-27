@@ -9,11 +9,7 @@ func _ready():
 
 
 func _physics_process(delta):
-	delta *= speed
-
-	# Rotate the snake head towards the desired
-	# direction and then we will move in that direction (along the local z-axis)
-	d += delta
+	d += delta * speed
 	if d > cube_step:
 		d = 0
 		$Snake.move_ahead(cube_step)
@@ -56,7 +52,7 @@ func _input(event):
 
 
 func _on_Snake_hit_tail():
-	pass # Replace with function body.
+	print("Hit tail")
 
 
 func set_apple_position():
@@ -64,5 +60,5 @@ func set_apple_position():
 
 
 func _on_Apple_ate_apple():
-	Globals.add_to_tail = true
+	Globals.add_to_tail = 1
 	set_apple_position()
