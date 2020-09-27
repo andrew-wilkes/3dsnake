@@ -1,23 +1,18 @@
 extends Spatial
 
 const MAX_OFFSET = 8
+const STEP_SIZE = 2
 
-var speed = 10
-var cube_step = 2
-var d = 0
 var tail_segments_to_add = 8
 
 func _ready():
 	set_apple_position()
 
 
-func _physics_process(delta):
-	d += delta * speed
-	if d > cube_step:
-		d = 0
-		tail_segments_to_add = $Snake.move_ahead(cube_step, tail_segments_to_add)
-		move_camera()
-		$Dust.check_extents($Tripod.translation)
+func _on_StepTimer_timeout():
+	tail_segments_to_add = $Snake.move_ahead(STEP_SIZE, tail_segments_to_add)
+	move_camera()
+	$Dust.check_extents($Tripod.translation)
 
 
 func move_camera():
