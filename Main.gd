@@ -47,6 +47,7 @@ func _input(event):
 					$Snake.up()
 				KEY_DOWN:
 					$Snake.down()
+		$Snake.set_displacement()
 
 
 func _on_Snake_hit_tail():

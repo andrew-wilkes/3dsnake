@@ -5,98 +5,91 @@ signal hit_tail
 const P2 = PI / 2
 
 var tail_piece_scene = preload("res://TailPiece.tscn")
-var inverted = false
-var reversed = false
 var displacement = transform.basis.z
 var direction = FORWARD
 
 enum { UP, DOWN, LEFT, RIGHT, FORWARD, BACK }
 
+# In the following functions we change direction according to user input
+# and current direction of movement of the snake head
 func up():
 	match direction:
 		UP:
 			direction = FORWARD
-			displacement = transform.basis.z
 		DOWN:
 			direction = BACK
-			displacement = -transform.basis.z
 		LEFT:
 			direction = UP
-			displacement = transform.basis.y
 		RIGHT:
 			direction = UP
-			displacement = transform.basis.y
 		FORWARD:
 			direction = UP
-			displacement = transform.basis.y
 		BACK:
 			direction = UP
-			displacement = transform.basis.y
+
 
 func down():
 	match direction:
 		UP:
 			direction = BACK
-			displacement = -transform.basis.z
 		DOWN:
 			direction = FORWARD
-			displacement = transform.basis.z
 		LEFT:
 			direction = DOWN
-			displacement = -transform.basis.y
 		RIGHT:
 			direction = DOWN
-			displacement = -transform.basis.y
 		FORWARD:
 			direction = DOWN
-			displacement = -transform.basis.y
 		BACK:
 			direction = DOWN
-			displacement = -transform.basis.y
 
 
 func left():
 	match direction:
 		UP:
 			direction = FORWARD
-			displacement = transform.basis.z
 		DOWN:
 			direction = FORWARD
-			displacement = transform.basis.z
 		LEFT:
 			direction = FORWARD
-			displacement = transform.basis.z
 		RIGHT:
 			direction = BACK
-			displacement = -transform.basis.z
 		FORWARD:
 			direction = LEFT
-			displacement = -transform.basis.x
 		BACK:
 			direction = LEFT
-			displacement = -transform.basis.x
 
 
 func right():
 	match direction:
 		UP:
 			direction = BACK
-			displacement = -transform.basis.z
 		DOWN:
 			direction = BACK
-			displacement = -transform.basis.z
 		LEFT:
 			direction = BACK
-			displacement = -transform.basis.z
 		RIGHT:
 			direction = FORWARD
-			displacement = transform.basis.z
 		FORWARD:
 			direction = RIGHT
-			displacement = transform.basis.x
 		BACK:
 			direction = RIGHT
+
+
+func set_displacement():
+	match direction:
+		UP:
+			displacement = transform.basis.y
+		DOWN:
+			displacement = -transform.basis.y
+		LEFT:
+			displacement = -transform.basis.x
+		RIGHT:
 			displacement = transform.basis.x
+		FORWARD:
+			displacement = transform.basis.z
+		BACK:
+			displacement = -transform.basis.z
 
 
 # The way to move is to move the head and set the last tail node to the last position of the head
