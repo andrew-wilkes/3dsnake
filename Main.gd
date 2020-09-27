@@ -18,29 +18,28 @@ func _physics_process(delta):
 		d = 0
 		process_inputs()
 		$Snake.move_ahead(transform.basis.z * cube_step)
-		move_snake()
+		move_camera()
+		$Dust.check_extents($Tripod.translation)
 
 
-func move_snake():
-	# Move whole snake if it hits box boundary
-	# So the camera follows the snake
-	# But without stationary items (dust) in the scene, the snake seems to have stopped moving
+func move_camera():
+	# Move camera with snake head at extents of movement box
 	var st = $Snake/Head.translation
-	var bt = $Snake.translation
-	if st.x > Globals.MAX_OFFSET:
-		bt.x += st.x - Globals.MAX_OFFSET
-	if -st.x > Globals.MAX_OFFSET:
-		bt.x += st.x + Globals.MAX_OFFSET
-	if st.y > Globals.MAX_OFFSET:
-		bt.y += st.y - Globals.MAX_OFFSET
-	if -st.y > Globals.MAX_OFFSET:
-		bt.y += st.y + Globals.MAX_OFFSET
-	if st.z > Globals.MAX_OFFSET:
-		bt.z += st.z - Globals.MAX_OFFSET
-	if -st.z > Globals.MAX_OFFSET:
-		bt.z += st.z + Globals.MAX_OFFSET
-	$Snake.translation = bt
-	$Dust.check_extents(bt)
+	var tt = $Tripod.translation
+	var offset = st - tt
+	if offset.x > Globals.MAX_OFFSET:
+		tt.x = st.x - Globals.MAX_OFFSET
+	if -offset.x > Globals.MAX_OFFSET:
+		tt.x = st.x + Globals.MAX_OFFSET
+	if offset.y > Globals.MAX_OFFSET:
+		tt.y = st.y - Globals.MAX_OFFSET
+	if -offset.y > Globals.MAX_OFFSET:
+		tt.y = st.y + Globals.MAX_OFFSET
+	if offset.z > Globals.MAX_OFFSET:
+		tt.z = st.z - Globals.MAX_OFFSET
+	if -offset.z > Globals.MAX_OFFSET:
+		tt.z = st.z + Globals.MAX_OFFSET
+	$Tripod.translation = tt
 
 
 func process_inputs():
@@ -65,3 +64,11 @@ func show_extents():
 
 func _on_Snake_hit_tail():
 	pass # Replace with function body.
+
+
+func set_apple_position():
+	$Apple.set_position($Snake/Head.translation, $Snake.get_positions())
+
+
+func _on_Apple_ate_apple():
+	set_apple_position()

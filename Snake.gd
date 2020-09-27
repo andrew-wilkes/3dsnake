@@ -36,3 +36,10 @@ func move_ahead(displacement: Vector3):
 
 func hit_tail(_area):
 	emit_signal("hit_tail")
+
+
+func get_positions():
+	var positions = []
+	for item in $Tail.get_children():
+		positions.append(item.translation)
+	return positions

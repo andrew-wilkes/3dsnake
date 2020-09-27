@@ -24,6 +24,9 @@ script = ExtResource( 5 )
 [node name="Apple" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.58654, 0, 0 )
 
-[node name="Camera" type="Camera" parent="."]
+[node name="Tripod" type="Spatial" parent="."]
+
+[node name="Camera" type="Camera" parent="Tripod"]
 transform = Transform( 1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 4, 24 )
-[connection signal="area_entered" from="Apple" to="." method="_on_Apple_area_entered"]
+current = true
+[connection signal="ate_apple" from="Apple" to="." method="_on_Apple_ate_apple"]
