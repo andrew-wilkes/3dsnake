@@ -7,43 +7,105 @@ const P2 = PI / 2
 var tail_piece_scene = preload("res://TailPiece.tscn")
 var inverted = false
 var reversed = false
+var displacement = transform.basis.z
+var direction = FORWARD
 
-func make_upright():
-	if $Head.transform.basis.y.y < -0.5:
-		$Head.rotate_object_local(transform.basis.x, PI)
-
+enum { UP, DOWN, LEFT, RIGHT, FORWARD, BACK }
 
 func up():
-	rotate_head(-transform.basis.x)
-
+	match direction:
+		UP:
+			direction = FORWARD
+			displacement = transform.basis.z
+		DOWN:
+			direction = BACK
+			displacement = -transform.basis.z
+		LEFT:
+			direction = UP
+			displacement = transform.basis.y
+		RIGHT:
+			direction = UP
+			displacement = transform.basis.y
+		FORWARD:
+			direction = UP
+			displacement = transform.basis.y
+		BACK:
+			direction = UP
+			displacement = transform.basis.y
 
 func down():
-	rotate_head(transform.basis.x)
+	match direction:
+		UP:
+			direction = BACK
+			displacement = -transform.basis.z
+		DOWN:
+			direction = FORWARD
+			displacement = transform.basis.z
+		LEFT:
+			direction = DOWN
+			displacement = -transform.basis.y
+		RIGHT:
+			direction = DOWN
+			displacement = -transform.basis.y
+		FORWARD:
+			direction = DOWN
+			displacement = -transform.basis.y
+		BACK:
+			direction = DOWN
+			displacement = -transform.basis.y
 
 
 func left():
-	rotate_head(transform.basis.y)
+	match direction:
+		UP:
+			direction = FORWARD
+			displacement = transform.basis.z
+		DOWN:
+			direction = FORWARD
+			displacement = transform.basis.z
+		LEFT:
+			direction = FORWARD
+			displacement = transform.basis.z
+		RIGHT:
+			direction = BACK
+			displacement = -transform.basis.z
+		FORWARD:
+			direction = LEFT
+			displacement = -transform.basis.x
+		BACK:
+			direction = LEFT
+			displacement = -transform.basis.x
 
 
 func right():
-	rotate_head(-transform.basis.y)
-
-
-func roll():
-	$Head.rotate_object_local(transform.basis.z, PI)
-
-
-func rotate_head(vec: Vector3):
-	$Head.rotate_object_local(vec, P2)
+	match direction:
+		UP:
+			direction = BACK
+			displacement = -transform.basis.z
+		DOWN:
+			direction = BACK
+			displacement = -transform.basis.z
+		LEFT:
+			direction = BACK
+			displacement = -transform.basis.z
+		RIGHT:
+			direction = FORWARD
+			displacement = transform.basis.z
+		FORWARD:
+			direction = RIGHT
+			displacement = transform.basis.x
+		BACK:
+			direction = RIGHT
+			displacement = transform.basis.x
 
 
 # The way to move is to move the head and set the last tail node to the last position of the head
 # Then position the the tail node as the first child node of the tail.
 # Now the last tail node becomes the end of the tail.
-func move_ahead(displacement: Vector3):
+func move_ahead(step: int):
 	var old_head_pos = $Head.translation
 	var end_pos = $Head.translation
-	$Head.translate(displacement)
+	$Head.translate(displacement * step)
 	var n = $Tail.get_child_count()
 	if n > 0:
 		var tail_piece = $Tail.get_child(n-1)

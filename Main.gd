@@ -16,7 +16,7 @@ func _physics_process(delta):
 	d += delta
 	if d > cube_step:
 		d = 0
-		$Snake.move_ahead(transform.basis.z * cube_step)
+		$Snake.move_ahead(cube_step)
 		move_camera()
 		$Dust.check_extents($Tripod.translation)
 
@@ -53,17 +53,6 @@ func _input(event):
 					$Snake.up()
 				KEY_DOWN:
 					$Snake.down()
-				KEY_SPACE:
-					$Snake.roll()
-
-
-func show_extents():
-	for x in [-1, 1]:
-		for y in [-1, 1]:
-			for z in [-1, 1]:
-				var box = CSGBox.new()
-				box.translation = Vector3(x, y, z) * Globals.MAX_OFFSET
-				$Snake/Extents.add_child(box)
 
 
 func _on_Snake_hit_tail():
@@ -75,4 +64,5 @@ func set_apple_position():
 
 
 func _on_Apple_ate_apple():
+	Globals.add_to_tail = true
 	set_apple_position()
