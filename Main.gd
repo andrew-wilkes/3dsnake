@@ -1,8 +1,11 @@
 extends Spatial
 
+const MAX_OFFSET = 8
+
 var speed = 10
 var cube_step = 2
 var d = 0
+var tail_segments_to_add = 8
 
 func _ready():
 	set_apple_position()
@@ -12,7 +15,7 @@ func _physics_process(delta):
 	d += delta * speed
 	if d > cube_step:
 		d = 0
-		$Snake.move_ahead(cube_step)
+		tail_segments_to_add = $Snake.move_ahead(cube_step, tail_segments_to_add)
 		move_camera()
 		$Dust.check_extents($Tripod.translation)
 
@@ -22,18 +25,18 @@ func move_camera():
 	var st = $Snake/Head.translation
 	var tt = $Tripod.translation
 	var offset = st - tt
-	if offset.x > Globals.MAX_OFFSET:
-		tt.x = st.x - Globals.MAX_OFFSET
-	if -offset.x > Globals.MAX_OFFSET:
-		tt.x = st.x + Globals.MAX_OFFSET
-	if offset.y > Globals.MAX_OFFSET:
-		tt.y = st.y - Globals.MAX_OFFSET
-	if -offset.y > Globals.MAX_OFFSET:
-		tt.y = st.y + Globals.MAX_OFFSET
-	if offset.z > Globals.MAX_OFFSET:
-		tt.z = st.z - Globals.MAX_OFFSET
-	if -offset.z > Globals.MAX_OFFSET:
-		tt.z = st.z + Globals.MAX_OFFSET
+	if offset.x > MAX_OFFSET:
+		tt.x = st.x - MAX_OFFSET
+	if -offset.x > MAX_OFFSET:
+		tt.x = st.x + MAX_OFFSET
+	if offset.y > MAX_OFFSET:
+		tt.y = st.y - MAX_OFFSET
+	if -offset.y > MAX_OFFSET:
+		tt.y = st.y + MAX_OFFSET
+	if offset.z > MAX_OFFSET:
+		tt.z = st.z - MAX_OFFSET
+	if -offset.z > MAX_OFFSET:
+		tt.z = st.z + MAX_OFFSET
 	$Tripod.translation = tt
 
 
@@ -60,5 +63,5 @@ func set_apple_position():
 
 
 func _on_Apple_ate_apple():
-	Globals.add_to_tail = 1
+	tail_segments_to_add = 1
 	set_apple_position()

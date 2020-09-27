@@ -102,7 +102,7 @@ func right():
 # The way to move is to move the head and set the last tail node to the last position of the head
 # Then position the the tail node as the first child node of the tail.
 # Now the last tail node becomes the end of the tail.
-func move_ahead(step: int):
+func move_ahead(step: int, tail_segments_to_add: int) -> int:
 	var old_head_pos = $Head.translation
 	var end_pos = $Head.translation
 	$Head.translate(displacement * step)
@@ -113,12 +113,14 @@ func move_ahead(step: int):
 		$Tail.move_child(tail_piece, 0)
 		tail_piece.translation = old_head_pos
 	
-	if Globals.add_to_tail > 0:
-		Globals.add_to_tail -= 1
+	if tail_segments_to_add > 0:
+		tail_segments_to_add -= 1
 		var tpi = tail_piece_scene.instance()
 		tpi.connect("area_entered", self, "hit_tail")
 		tpi.translation = end_pos
 		$Tail.add_child(tpi)
+	
+	return tail_segments_to_add
 
 
 func hit_tail(_area):

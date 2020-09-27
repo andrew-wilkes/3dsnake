@@ -1,8 +1,11 @@
 extends Spatial
 
+const NUM_PARTICLES = 50
+const MAX_CLOUD_OFFSET = 16
+
 func _ready():
 	# Spawn a cloud of dust particles
-	for n in Globals.NUM_PARTICLES:
+	for n in NUM_PARTICLES:
 		$Cloud.add_child($Cloud/Box.duplicate())
 	# Randomly position them
 	for box in $Cloud.get_children():
@@ -11,7 +14,7 @@ func _ready():
 
 
 func get_rand_pos():
-	return rand_range(-Globals.MAX_CLOUD_OFFSET, Globals.MAX_CLOUD_OFFSET)
+	return rand_range(-MAX_CLOUD_OFFSET, MAX_CLOUD_OFFSET)
 
 
 func check_extents(base_pos: Vector3):
@@ -21,8 +24,8 @@ func check_extents(base_pos: Vector3):
 
 
 func wrap_coor(n):
-	if n > Globals.MAX_CLOUD_OFFSET:
-		return n - 2 * Globals.MAX_CLOUD_OFFSET
-	if n < -Globals.MAX_CLOUD_OFFSET:
-		return n + 2 * Globals.MAX_CLOUD_OFFSET
+	if n > MAX_CLOUD_OFFSET:
+		return n - 2 * MAX_CLOUD_OFFSET
+	if n < -MAX_CLOUD_OFFSET:
+		return n + 2 * MAX_CLOUD_OFFSET
 	return n

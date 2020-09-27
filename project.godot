@@ -19,10 +19,6 @@ config/name="3D Snake"
 run/main_scene="res://Main.tscn"
 config/icon="res://icon.png"
 
-[autoload]
-
-Globals="*res://globals.gd"
-
 [rendering]
 
 environment/default_clear_color=Color( 0.145098, 0.145098, 0.145098, 1 )
