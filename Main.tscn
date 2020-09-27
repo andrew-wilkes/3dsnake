@@ -15,17 +15,15 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -2.52055, 0, 2.16754 )
 [node name="Snake" type="Spatial" parent="."]
 script = ExtResource( 5 )
 
-[node name="Extents" type="Spatial" parent="Snake"]
-
 [node name="Head" parent="Snake" instance=ExtResource( 2 )]
 
 [node name="Tail" type="Spatial" parent="Snake"]
-
-[node name="Camera" type="Camera" parent="Snake"]
-transform = Transform( 1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 4, 24 )
 
 [node name="Dust" parent="." instance=ExtResource( 3 )]
 
 [node name="Apple" parent="." instance=ExtResource( 4 )]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 3.58654, 0, 0 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.984808, 0.173648, 0, -0.173648, 0.984808, 0, 4, 24 )
 [connection signal="area_entered" from="Apple" to="." method="_on_Apple_area_entered"]

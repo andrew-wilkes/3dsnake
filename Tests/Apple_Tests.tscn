@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Apple.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Tests/Apple_Tests.gd" type="Script" id=2]
+
+[node name="AppleTests" type="Spatial"]
+script = ExtResource( 2 )
+
+[node name="Apple" parent="." instance=ExtResource( 1 )]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 6.4031, 0, 0 )
+
+[node name="Items" type="Spatial" parent="."]
+
+[node name="CSGBox" type="CSGBox" parent="Items"]
+
+[node name="CSGBox2" type="CSGBox" parent="Items"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2066, 2.09752, 2.04818 )
+
+[node name="CSGBox3" type="CSGBox" parent="Items"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.89962, 2.02476, -11.6056 )
+
+[node name="CSGBox4" type="CSGBox" parent="Items"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -3.89695, -7.90108, 3.81729 )
+
+[node name="CSGBox5" type="CSGBox" parent="Items"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0512, -0.0206423, -6.5253 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.999992, -0.00292165, 0.00270169, 0, 0.678929, 0.734204, -0.00397934, -0.734198, 0.678923, -5.402, 16.529, 12.545 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
