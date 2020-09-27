@@ -5,6 +5,33 @@ signal hit_tail
 const P2 = PI / 2
 
 var tail_piece_scene = preload("res://TailPiece.tscn")
+var inverted = false
+var reversed = false
+
+func make_upright():
+	if $Head.transform.basis.y.y < -0.5:
+		$Head.rotate_object_local(transform.basis.x, PI)
+
+
+func up():
+	rotate_head(-transform.basis.x)
+
+
+func down():
+	rotate_head(transform.basis.x)
+
+
+func left():
+	rotate_head(transform.basis.y)
+
+
+func right():
+	rotate_head(-transform.basis.y)
+
+
+func roll():
+	$Head.rotate_object_local(transform.basis.z, PI)
+
 
 func rotate_head(vec: Vector3):
 	$Head.rotate_object_local(vec, P2)
@@ -16,15 +43,13 @@ func rotate_head(vec: Vector3):
 func move_ahead(displacement: Vector3):
 	var old_head_pos = $Head.translation
 	var end_pos = $Head.translation
-	$Head.translate_object_local(displacement)
+	$Head.translate(displacement)
 	var n = $Tail.get_child_count()
 	if n > 0:
 		var tail_piece = $Tail.get_child(n-1)
 		end_pos = tail_piece.translation
 		$Tail.move_child(tail_piece, 0)
 		tail_piece.translation = old_head_pos
-		if (old_head_pos - translation).length() < 0.5:
-			print("Coincident!")
 	
 	if Globals.add_to_tail:
 		Globals.add_to_tail = false

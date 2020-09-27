@@ -16,7 +16,6 @@ func _physics_process(delta):
 	d += delta
 	if d > cube_step:
 		d = 0
-		process_inputs()
 		$Snake.move_ahead(transform.basis.z * cube_step)
 		move_camera()
 		$Dust.check_extents($Tripod.translation)
@@ -42,15 +41,20 @@ func move_camera():
 	$Tripod.translation = tt
 
 
-func process_inputs():
-	if Input.is_action_pressed("ui_right"):
-		$Snake.rotate_head(-transform.basis.y)
-	elif Input.is_action_pressed("ui_left"):
-		$Snake.rotate_head(transform.basis.y)
-	elif Input.is_action_pressed("ui_up"):
-		$Snake.rotate_head(-transform.basis.x)
-	elif Input.is_action_pressed("ui_down"):
-		$Snake.rotate_head(transform.basis.x)
+func _input(event):
+	if event is InputEventKey:
+		if event.pressed:
+			match event.scancode:
+				KEY_RIGHT:
+					$Snake.right()
+				KEY_LEFT:
+					$Snake.left()
+				KEY_UP:
+					$Snake.up()
+				KEY_DOWN:
+					$Snake.down()
+				KEY_SPACE:
+					$Snake.roll()
 
 
 func show_extents():
