@@ -2,11 +2,11 @@ extends Spatial
 
 const MAX_OFFSET = 8
 const STEP_SIZE = 2
+const START_TAIL_LENGTH = 4
+const SCORE_INCREMENT = 950
 
-var tail_segments_to_add = 8
-
-func _ready():
-	set_apple_position()
+var tail_segments_to_add: int
+var score = 0
 
 
 func _on_StepTimer_timeout():
@@ -47,11 +47,14 @@ func _input(event):
 					$Snake.up()
 				KEY_DOWN:
 					$Snake.down()
+				KEY_ESCAPE:
+					get_tree().quit()
 		$Snake.set_displacement()
 
 
 func _on_Snake_hit_tail():
-	print("Hit tail")
+	$StepTimer.stop()
+	$IO.game_over()
 
 
 func set_apple_position():
@@ -60,4 +63,21 @@ func set_apple_position():
 
 func _on_Apple_ate_apple():
 	tail_segments_to_add = 1
+	score += SCORE_INCREMENT
+	$IO.set_score(score)
 	set_apple_position()
+
+
+func _on_IO_start_game():
+	# Reset the score and chop off the tail to start a new game
+	$IO.set_score(0)
+	score = 0
+	for tail_segment in $Snake/Tail.get_children():
+		tail_segment.queue_free()
+	tail_segments_to_add = START_TAIL_LENGTH
+	set_apple_position()
+	$StepTimer.start()
+
+
+func _on_IO_exit_game():
+	get_tree().quit()

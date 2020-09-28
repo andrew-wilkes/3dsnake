@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Head.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Dust.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Apple.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Snake.gd" type="Script" id=5]
+[ext_resource path="res://IO.tscn" type="PackedScene" id=6]
 
 [node name="Main" type="Spatial"]
 script = ExtResource( 1 )
@@ -32,7 +33,12 @@ current = true
 
 [node name="StepTimer" type="Timer" parent="."]
 wait_time = 0.2
-autostart = true
+
+[node name="IO" parent="." instance=ExtResource( 6 )]
+margin_right = 105.0
+margin_bottom = 57.0
 [connection signal="hit_tail" from="Snake" to="." method="_on_Snake_hit_tail"]
 [connection signal="ate_apple" from="Apple" to="." method="_on_Apple_ate_apple"]
 [connection signal="timeout" from="StepTimer" to="." method="_on_StepTimer_timeout"]
+[connection signal="exit_game" from="IO" to="." method="_on_IO_exit_game"]
+[connection signal="start_game" from="IO" to="." method="_on_IO_start_game"]
