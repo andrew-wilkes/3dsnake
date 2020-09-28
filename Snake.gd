@@ -2,8 +2,6 @@ extends Spatial
 
 signal hit_tail
 
-const P2 = PI / 2
-
 var tail_piece_scene = preload("res://TailPiece.tscn")
 var displacement = transform.basis.z
 var direction = FORWARD
@@ -95,6 +93,7 @@ func set_displacement():
 # The way to move is to move the head and set the last tail node to the last position of the head
 # Then position the the tail node as the first child node of the tail.
 # Now the last tail node becomes the end of the tail.
+# Also, we can use the last end_pos as a location to add another tail segment knowing that the location is clear. Also, there can be a number of segments to add rather than just one (as a bool).
 func move_ahead(step: int, tail_segments_to_add: int) -> int:
 	var old_head_pos = $Head.translation
 	var end_pos = $Head.translation
