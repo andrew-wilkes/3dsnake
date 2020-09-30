@@ -38,7 +38,7 @@ wait_time = 0.2
 margin_right = 105.0
 margin_bottom = 57.0
 [connection signal="hit_tail" from="Snake" to="." method="_on_Snake_hit_tail"]
-[connection signal="ate_apple" from="Apple" to="." method="_on_Apple_ate_apple"]
+[connection signal="eaten" from="Apple" to="." method="_on_Apple_eaten"]
 [connection signal="timeout" from="StepTimer" to="." method="_on_StepTimer_timeout"]
 [connection signal="exit_game" from="IO" to="." method="_on_IO_exit_game"]
 [connection signal="start_game" from="IO" to="." method="_on_IO_start_game"]

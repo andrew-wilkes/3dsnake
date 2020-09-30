@@ -5,7 +5,7 @@
 
 extends Area
 
-signal ate_apple
+signal eaten
 
 func set_position(origin: Vector3, points_to_avoid: Array):
 	# Find a suitable position in empty space
@@ -30,4 +30,4 @@ func get_point():
 
 
 func _on_Apple_area_entered(_area):
-	emit_signal("ate_apple")
+	emit_signal("eaten")

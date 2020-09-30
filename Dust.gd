@@ -24,8 +24,4 @@ func check_extents(base_pos: Vector3):
 
 
 func wrap_coor(n):
-	if n > MAX_CLOUD_OFFSET:
-		return n - 2 * MAX_CLOUD_OFFSET
-	if n < -MAX_CLOUD_OFFSET:
-		return n + 2 * MAX_CLOUD_OFFSET
-	return n
+	return wrapf(n, -MAX_CLOUD_OFFSET, MAX_CLOUD_OFFSET)

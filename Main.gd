@@ -61,7 +61,7 @@ func set_apple_position():
 	$Apple.set_position($Snake/Head.translation, $Snake.get_positions())
 
 
-func _on_Apple_ate_apple():
+func _on_Apple_eaten():
 	tail_segments_to_add = 1
 	score += SCORE_INCREMENT
 	$IO.set_score(score)
