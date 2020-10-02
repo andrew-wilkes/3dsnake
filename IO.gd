@@ -26,3 +26,7 @@ func set_score(value):
 
 func game_over():
 	$GameOver.popup_centered()
+
+
+func _on_Start_popup_hide():
+	emit_signal("start_game")

@@ -44,4 +44,5 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="confirmed" from="Start" to="." method="_on_Start_confirmed"]
+[connection signal="popup_hide" from="Start" to="." method="_on_Start_popup_hide"]
 [connection signal="confirmed" from="GameOver" to="." method="_on_GameOver_confirmed"]
