@@ -124,3 +124,8 @@ func get_positions():
 	for item in $Tail.get_children():
 		positions.append(item.translation)
 	return positions
+
+
+func remove_tail():
+	for tail_segment in $Tail.get_children():
+		tail_segment.queue_free()

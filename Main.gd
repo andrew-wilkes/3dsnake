@@ -52,13 +52,13 @@ func _input(event):
 		$Snake.set_displacement()
 
 
+func set_apple_position():
+	$Apple.set_position($Snake/Head.translation, $Snake.get_positions())
+
+
 func _on_Snake_hit_tail():
 	$StepTimer.stop()
 	$IO.game_over()
-
-
-func set_apple_position():
-	$Apple.set_position($Snake/Head.translation, $Snake.get_positions())
 
 
 func _on_Apple_eaten():
@@ -72,8 +72,7 @@ func _on_IO_start_game():
 	# Reset the score and chop off the tail to start a new game
 	$IO.set_score(0)
 	score = 0
-	for tail_segment in $Snake/Tail.get_children():
-		tail_segment.queue_free()
+	$Snake.remove_tail()
 	tail_segments_to_add = START_TAIL_LENGTH
 	set_apple_position()
 	$StepTimer.start()
