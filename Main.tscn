@@ -31,6 +31,8 @@ wait_time = 0.2
 [node name="IO" parent="." instance=ExtResource( 6 )]
 margin_right = 105.0
 margin_bottom = 57.0
+
+[connection signal="hit_tail" from="Snake" to="." method="_on_Snake_hit_tail"]
 [connection signal="eaten" from="Apple" to="." method="_on_Apple_eaten"]
 [connection signal="timeout" from="StepTimer" to="." method="_on_StepTimer_timeout"]
 [connection signal="exit_game" from="IO" to="." method="_on_IO_exit_game"]
